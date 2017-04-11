@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -63,7 +62,7 @@ public class HomeActivity extends AppCompatActivity
         ImageView userCoverIV = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_cover_xml);
         Picasso.with(this)
                 .load(userPicURL.replace("_normal", ""))
-                .resize(150,150)
+                .resize(150, 150)
                 .into(userPicIV);
         String userCoverURL = bundle.getString("UserCover");
         Picasso.with(this)
@@ -95,35 +94,31 @@ public class HomeActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_report:
+                break;
+            case R.id.action_logout:
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (id) {
+            case R.id.nav_profile:
+                break;
+            case R.id.nav_timeline:
+                break;
+            case R.id.nav_search:
+                break;
+            case R.id.nav_settings:
+                break;
+            case R.id.nav_help:
+                break;
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
