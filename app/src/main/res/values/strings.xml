@@ -4,7 +4,8 @@
     <string name="image_background_signin">Twitterati background image</string>
     <string name="signin_problem">There seems to be problem logging in!</string>
 
-
+    <!--Home activity-->
+    <string name="desc_user_pic">Display picture of user</string>
     <string name="title_activity_home">HomeActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

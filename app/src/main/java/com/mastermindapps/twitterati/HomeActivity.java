@@ -2,9 +2,8 @@ package com.mastermindapps.twitterati;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,9 +11,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +44,25 @@ public class HomeActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        getDataFromMainAc();
+    }
+
+    void getDataFromMainAc() {
+        Bundle bundle = getIntent().getExtras();
+        TextView userNameTextV = (TextView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_name_xml);
+        userNameTextV.setText(bundle.getString("UserName"));
+        TextView userHandleTextV = (TextView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_handle_xml);
+        String userHandle = bundle.getString("UserHandle");
+        String at = "@";
+        userHandleTextV.setText(at.concat(userHandle));
+        ImageView userPicIV = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_pic_xml);
+        String userPicURL = bundle.getString("UserPic");
+        Picasso.with(this)
+                .load(userPicURL)
+                .resize(100,100)
+                .into(userPicIV);
     }
 
     @Override
