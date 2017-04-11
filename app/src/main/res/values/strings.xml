@@ -2,6 +2,7 @@
     <!--Sign In activity-->
     <string name="app_name">Twitterati</string>
     <string name="image_background_signin">Twitterati background image</string>
+    <string name="signin_problem">There seems to be problem logging in!</string>
 
 
     <string name="title_activity_home">HomeActivity</string>
