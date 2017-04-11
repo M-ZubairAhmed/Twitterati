@@ -1,5 +1,6 @@
 package com.mastermindapps.twitterati;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -9,13 +10,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterSession;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,6 +32,11 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        TwitterSession session = Twitter.getSessionManager().getActiveSession();
+        TwitterAuthToken authToken = session.getAuthToken();
+        String token = authToken.token;
+        String secret = authToken.secret;
+        Log.e("aaaaaaaaaaaaaaaaaaaaaa", token);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -98,6 +109,7 @@ public class HomeActivity extends AppCompatActivity
             case R.id.action_report:
                 break;
             case R.id.action_logout:
+                logoutTwitter();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -122,5 +134,14 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    void logoutTwitter() {
+        Twitter.getSessionManager().clearActiveSession();
+        Twitter.logOut();
+        Intent gobackSignin = new Intent(HomeActivity.this,SigninActivity.class);
+        startActivity(gobackSignin);
+        finish();
+        Toast.makeText(getApplicationContext(),"You are logged out",Toast.LENGTH_LONG).show();
     }
 }

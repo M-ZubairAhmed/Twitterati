@@ -72,6 +72,7 @@ public class SigninActivity extends AppCompatActivity {
                 gotoHomeActivity.putExtra("UserPic", profilePic);
                 gotoHomeActivity.putExtra("UserCover",coverPic);
                 startActivity(gotoHomeActivity);
+                finish();
             }
         });
     }
