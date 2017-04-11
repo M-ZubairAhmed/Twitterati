@@ -13,6 +13,7 @@ import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.models.User;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -31,7 +32,8 @@ public class SigninActivity extends AppCompatActivity {
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
-                TwitterSession session = result.data;
+                successProceedNext(result);
+
             }
 
             @Override
@@ -48,5 +50,29 @@ public class SigninActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         loginButton.onActivityResult(requestCode, resultCode, data);
     }
+
+    void successProceedNext(Result<TwitterSession> result) {
+        TwitterSession session = result.data;
+        Twitter.getApiClient(session).getAccountService().verifyCredentials(true, false).enqueue(new Callback<User>() {
+            @Override
+            public void failure(TwitterException e) {
+                //If any error occurs handle it here
+            }
+
+            @Override
+            public void success(Result<User> userResult) {
+                User user = userResult.data;
+                String userName = user.name;
+                String userHandle = user.screenName;
+                String profilePic = user.profileImageUrl;
+                Intent gotoHomeActivity = new Intent(SigninActivity.this, HomeActivity.class);
+                gotoHomeActivity.putExtra("UserHandle", userHandle);
+                gotoHomeActivity.putExtra("UserName", userName);
+                gotoHomeActivity.putExtra("UserPic", profilePic);
+                startActivity(gotoHomeActivity);
+            }
+        });
+    }
+
 
 }
