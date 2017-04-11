@@ -121,3 +121,5 @@ fabric.properties
 .idea/sonarlint
 
 # End of https://www.gitignore.io/api/intellij,android
+app/src/main/java/com/mastermindapps/twitterati/TwitterSecret.java
+app/fabric.properties___jb_tmp___

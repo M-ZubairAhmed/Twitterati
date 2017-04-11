@@ -1,3 +1,13 @@
 <resources>
+    <!--Sign In activity-->
     <string name="app_name">Twitterati</string>
+    <string name="image_background_signin">Twitterati background image</string>
+
+
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
