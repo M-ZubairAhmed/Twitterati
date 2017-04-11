@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -59,10 +60,16 @@ public class HomeActivity extends AppCompatActivity
         userHandleTextV.setText(at.concat(userHandle));
         ImageView userPicIV = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_pic_xml);
         String userPicURL = bundle.getString("UserPic");
+        ImageView userCoverIV = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_cover_xml);
         Picasso.with(this)
-                .load(userPicURL)
-                .resize(100,100)
+                .load(userPicURL.replace("_normal", ""))
+                .resize(150,150)
                 .into(userPicIV);
+        String userCoverURL = bundle.getString("UserCover");
+        Picasso.with(this)
+                .load(userCoverURL)
+                .fit()
+                .into(userCoverIV);
     }
 
     @Override

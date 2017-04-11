@@ -65,10 +65,12 @@ public class SigninActivity extends AppCompatActivity {
                 String userName = user.name;
                 String userHandle = user.screenName;
                 String profilePic = user.profileImageUrl;
+                String coverPic = user.profileBannerUrl;
                 Intent gotoHomeActivity = new Intent(SigninActivity.this, HomeActivity.class);
                 gotoHomeActivity.putExtra("UserHandle", userHandle);
                 gotoHomeActivity.putExtra("UserName", userName);
                 gotoHomeActivity.putExtra("UserPic", profilePic);
+                gotoHomeActivity.putExtra("UserCover",coverPic);
                 startActivity(gotoHomeActivity);
             }
         });
