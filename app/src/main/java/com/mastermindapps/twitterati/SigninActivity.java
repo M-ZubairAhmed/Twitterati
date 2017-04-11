@@ -70,9 +70,10 @@ public class SigninActivity extends AppCompatActivity {
                 gotoHomeActivity.putExtra("UserHandle", userHandle);
                 gotoHomeActivity.putExtra("UserName", userName);
                 gotoHomeActivity.putExtra("UserPic", profilePic);
-                gotoHomeActivity.putExtra("UserCover",coverPic);
+                gotoHomeActivity.putExtra("UserCover", coverPic);
                 startActivity(gotoHomeActivity);
                 finish();
+                Toast.makeText(getApplicationContext(), userHandle + "\nWelcome", Toast.LENGTH_SHORT).show();
             }
         });
     }
