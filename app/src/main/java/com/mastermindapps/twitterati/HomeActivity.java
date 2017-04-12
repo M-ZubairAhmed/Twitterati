@@ -18,29 +18,47 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.twitter.sdk.android.Twitter;
-import com.twitter.sdk.android.core.TwitterAuthToken;
-import com.twitter.sdk.android.core.TwitterSession;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView navigationView;
-     String q = null;
+    String queryString = null;
+    ProgressBar fetchingResultsLoader;
+    String userHandleTwitter;
+    String userNameTwitter;
+    String userPicURLTwitter;
+    String userCoverURLTwitter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        TwitterSession session = Twitter.getSessionManager().getActiveSession();
-        TwitterAuthToken authToken = session.getAuthToken();
-        String token = authToken.token;
-        String secret = authToken.secret;
-        Log.e("aaaaaaaaaaaaaaaaaaaaaa", token);
+
+//        TwitterSession session = getInstance().core.getSessionManager().getActiveSession();
+//        Twitter.getApiClient(session).getAccountService().verifyCredentials(true, false).enqueue(new Callback<User>() {
+//            @Override
+//            public void success(Result<User> result) {
+//                User user = result.data;
+//                userNameTwitter = user.name;
+//                userHandleTwitter = user.screenName;
+//                userPicURLTwitter = user.profileImageUrl;
+//                userCoverURLTwitter = user.profileBackgroundImageUrl;
+//
+//            }
+//
+//            @Override
+//            public void failure(TwitterException exception) {
+//
+//            }
+//        });
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -60,29 +78,23 @@ public class HomeActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        getDataFromMainAc();
-    }
 
-    void getDataFromMainAc() {
-        Bundle bundle = getIntent().getExtras();
         TextView userNameTextV = (TextView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_name_xml);
-        userNameTextV.setText(bundle.getString("UserName"));
         TextView userHandleTextV = (TextView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_handle_xml);
-        String userHandle = bundle.getString("UserHandle");
-        String at = "@";
-        userHandleTextV.setText(at.concat(userHandle));
-        ImageView userPicIV = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_pic_xml);
-        String userPicURL = bundle.getString("UserPic");
-        ImageView userCoverIV = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_cover_xml);
-        Picasso.with(this)
-                .load(userPicURL.replace("_normal", ""))
-                .resize(150, 150)
-                .into(userPicIV);
-        String userCoverURL = bundle.getString("UserCover");
-        Picasso.with(this)
-                .load(userCoverURL)
-                .fit()
-                .into(userCoverIV);
+        ImageView userPicImageV = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_pic_xml);
+        ImageView userCoverImageV = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_cover_xml);
+
+
+        userNameTextV.setText(UserInfo.userName);
+        userHandleTextV.setText(UserInfo.userHandle);
+        try {
+            userPicURLTwitter = UserInfo.userPicUrl;
+            userCoverURLTwitter = UserInfo.userCoverUrl;
+            Picasso.with(this).load(userPicURLTwitter.replace("_normal", "")).resize(150, 150).into(userPicImageV);
+            Picasso.with(this).load(userCoverURLTwitter).fit().into(userCoverImageV);
+        } catch (NullPointerException npE) {
+            Log.e("Null pointer", "User profiles and cover url is absent");
+        }
     }
 
     @Override
@@ -121,11 +133,15 @@ public class HomeActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        Intent navIntent;
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_profile:
                 break;
             case R.id.nav_timeline:
+                navIntent = new Intent(HomeActivity.this, TimelineActivity.class);
+                navIntent.putExtra("UserScreenName", userHandleTwitter);
+                startActivityForResult(navIntent, 200);
                 break;
             case R.id.nav_search:
                 break;
@@ -158,13 +174,16 @@ public class HomeActivity extends AppCompatActivity
                 .setPositiveButton("Search", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        q = queryEditT.getText().toString().trim().toLowerCase();
-                        Toast.makeText(HomeActivity.this,q,Toast.LENGTH_SHORT).show();
+                        queryString = queryEditT.getText().toString().trim().toLowerCase();
+                        Toast.makeText(HomeActivity.this, userNameTwitter, Toast.LENGTH_LONG).show();
                     }
                 })
                 .create();
         alertDialog.show();
-        return q;
+        fetchingResultsLoader = new ProgressBar(HomeActivity.this);
+        fetchingResultsLoader.setIndeterminate(true);
+        return queryString;
     }
+
 }
 

@@ -62,18 +62,14 @@ public class SigninActivity extends AppCompatActivity {
             @Override
             public void success(Result<User> userResult) {
                 User user = userResult.data;
-                String userName = user.name;
-                String userHandle = user.screenName;
-                String profilePic = user.profileImageUrl;
-                String coverPic = user.profileBannerUrl;
+                UserInfo.userName = user.name;
+                UserInfo.userHandle = user.screenName;
+                UserInfo.userPicUrl = user.profileImageUrl;
+                UserInfo.userCoverUrl = user.profileBannerUrl;
                 Intent gotoHomeActivity = new Intent(SigninActivity.this, HomeActivity.class);
-                gotoHomeActivity.putExtra("UserHandle", userHandle);
-                gotoHomeActivity.putExtra("UserName", userName);
-                gotoHomeActivity.putExtra("UserPic", profilePic);
-                gotoHomeActivity.putExtra("UserCover", coverPic);
                 startActivity(gotoHomeActivity);
                 finish();
-                Toast.makeText(getApplicationContext(), userHandle + "\nWelcome", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "@" + UserInfo.userHandle + "\nWelcome", Toast.LENGTH_SHORT).show();
             }
         });
     }
