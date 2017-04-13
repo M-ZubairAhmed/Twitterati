@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swiperefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.mastermindapps.twitterati.HomeActivity"
-    tools:showIn="@layout/app_bar_timeline">
+    tools:showIn="@layout/activity_timeline">
 
-    <TextView
-        android:id="@+id/notimeline_xml"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="No Tweets" />
+        android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/timeline_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:divider="@color/colorLightGrey"
-        android:clickable="false"
-        android:dividerHeight="1dp"
-        android:drawSelectorOnTop="false" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/notimeline_xml"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/no_tweet" />
+
+        <ListView
+            android:id="@+id/timeline_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:divider="@color/colorLightGrey"
+            android:dividerHeight="1dp"
+            android:drawSelectorOnTop="false" />
+    </LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

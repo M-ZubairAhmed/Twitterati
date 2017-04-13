@@ -5,31 +5,31 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_nav_profile"
-            android:title="Profile" />
+            android:title="@string/nav_profile" />
         <item
             android:id="@+id/nav_timeline"
             android:icon="@drawable/ic_nav_timeline"
-            android:title="Timeline" />
+            android:title="@string/nav_timeline" />
         <item
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_fab_search_black"
-            android:title="Search" />
+            android:title="@string/nav_search" />
 
     </group>
 
     <group
-        android:id="@+id/menu_bottom"
+        android:id="@+id/nav_group_bottom"
         android:checkableBehavior="single">
 
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_nav_setting"
-            android:title="Settings" />
+            android:title="@string/nav_settings" />
 
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_nav_help"
-            android:title="Help" />
+            android:title="@string/nav_help" />
 
     </group>
 </menu>

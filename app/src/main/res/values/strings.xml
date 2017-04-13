@@ -11,14 +11,21 @@
 <!--Drawer-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_timeline">Timeline</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_help">Help</string>
 
 <!--Menu-->
-    <string name="action_settings">Report error</string>
-    <string name="action_logout">Log out</string>
+    <string name="menu_report">Report error</string>
+    <string name="menu_logout">Log out</string>
+    <string name="menu_refresh">Refresh</string>
 
     <!--Search activity-->
     <string name="title_activity_search">Search</string>
 
     <!--Timeline activity-->
     <string name="title_activity_timeline">Timeline</string>
+    <string name="no_tweet">No tweets</string>
 </resources>
