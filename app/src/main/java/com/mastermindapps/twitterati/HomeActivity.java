@@ -3,7 +3,6 @@ package com.mastermindapps.twitterati;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -41,34 +40,8 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-//        TwitterSession session = getInstance().core.getSessionManager().getActiveSession();
-//        Twitter.getApiClient(session).getAccountService().verifyCredentials(true, false).enqueue(new Callback<User>() {
-//            @Override
-//            public void success(Result<User> result) {
-//                User user = result.data;
-//                userNameTwitter = user.name;
-//                userHandleTwitter = user.screenName;
-//                userPicURLTwitter = user.profileImageUrl;
-//                userCoverURLTwitter = user.profileBackgroundImageUrl;
-//
-//            }
-//
-//            @Override
-//            public void failure(TwitterException exception) {
-//
-//            }
-//        });
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String query = getSearchQuery();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -83,7 +56,6 @@ public class HomeActivity extends AppCompatActivity
         TextView userHandleTextV = (TextView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_handle_xml);
         ImageView userPicImageV = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_pic_xml);
         ImageView userCoverImageV = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_cover_xml);
-
 
         userNameTextV.setText(UserInfo.userName);
         userHandleTextV.setText(UserInfo.userHandle);
