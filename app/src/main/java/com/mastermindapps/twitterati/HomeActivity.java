@@ -144,6 +144,8 @@ public class HomeActivity extends AppCompatActivity
                 startActivityForResult(navIntent, 200);
                 break;
             case R.id.nav_search:
+                navIntent = new Intent(HomeActivity.this, SearchActivity.class);
+                startActivity(navIntent);
                 break;
             case R.id.nav_settings:
                 break;

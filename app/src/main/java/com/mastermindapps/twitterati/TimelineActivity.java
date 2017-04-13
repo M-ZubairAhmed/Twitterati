@@ -3,6 +3,7 @@ package com.mastermindapps.twitterati;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,7 +18,11 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.app_bar_timeline);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } catch (NullPointerException npE) {
+            Log.e("Toolbar-timelineAct", "Null pointer for toolbar displaying as up");
+        }
 
         Bundle bundle = getIntent().getExtras();
         final UserTimeline userTimeline = new UserTimeline.Builder()

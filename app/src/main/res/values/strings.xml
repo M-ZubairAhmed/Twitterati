@@ -6,11 +6,19 @@
 
     <!--Home activity-->
     <string name="desc_user_pic">Display picture of user</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">Feeds</string>
 
+<!--Drawer-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+<!--Menu-->
     <string name="action_settings">Report error</string>
     <string name="action_logout">Log out</string>
+
+    <!--Search activity-->
+    <string name="title_activity_search">Search</string>
+
+    <!--Timeline activity-->
+    <string name="title_activity_timeline">Timeline</string>
 </resources>
