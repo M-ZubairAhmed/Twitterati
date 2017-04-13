@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -19,6 +20,9 @@ import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 import com.twitter.sdk.android.tweetui.UserTimeline;
 
 public class TimelineActivity extends AppCompatActivity {
+
+    TweetTimelineListAdapter adapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,7 @@ public class TimelineActivity extends AppCompatActivity {
         final UserTimeline userTimeline = new UserTimeline.Builder()
                 .screenName(bundle.getString("UserScreenName"))
                 .build();
-        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
+        adapter = new TweetTimelineListAdapter.Builder(this)
                 .setTimeline(userTimeline)
                 .build();
         TextView emptyTimeline = (TextView) findViewById(R.id.notimeline_xml);
@@ -44,25 +48,14 @@ public class TimelineActivity extends AppCompatActivity {
         listView.setEmptyView(emptyTimeline);
         listView.setAdapter(adapter);
 
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(true);
-                adapter.refresh(new Callback<TimelineResult<Tweet>>() {
-                    @Override
-                    public void success(Result<TimelineResult<Tweet>> result) {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void failure(TwitterException exception) {
-
-                    }
-                });
+                refreshAdapter();
             }
         });
-
     }
 
     @Override
@@ -76,8 +69,24 @@ public class TimelineActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_refresh:
+                swipeRefreshLayout.setRefreshing(true);
+                refreshAdapter();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void refreshAdapter() {
+        adapter.refresh(new Callback<TimelineResult<Tweet>>() {
+            @Override
+            public void success(Result<TimelineResult<Tweet>> result) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                Toast.makeText(TimelineActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
