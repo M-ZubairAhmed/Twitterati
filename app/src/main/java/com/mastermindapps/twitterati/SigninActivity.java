@@ -52,7 +52,7 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     void successProceedNext(Result<TwitterSession> result) {
-        TwitterSession session = result.data;
+        final TwitterSession session = result.data;
         Twitter.getApiClient(session).getAccountService().verifyCredentials(true, false).enqueue(new Callback<User>() {
             @Override
             public void failure(TwitterException e) {
@@ -66,6 +66,7 @@ public class SigninActivity extends AppCompatActivity {
                 UserInfo.userHandle = user.screenName;
                 UserInfo.userPicUrl = user.profileImageUrl;
                 UserInfo.userCoverUrl = user.profileBannerUrl;
+                UserInfo.userId = session.getId();
                 Intent gotoHomeActivity = new Intent(SigninActivity.this, HomeActivity.class);
                 startActivity(gotoHomeActivity);
                 finish();

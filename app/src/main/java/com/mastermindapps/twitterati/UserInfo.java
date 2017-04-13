@@ -6,5 +6,6 @@ class UserInfo {
     static String userHandle;
     static String userPicUrl;
     static String userCoverUrl;
+    static long userId;
 
 }

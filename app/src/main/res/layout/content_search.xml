@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,4 +9,19 @@
     tools:context="com.mastermindapps.twitterati.SearchActivity"
     tools:showIn="@layout/activity_search">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/no_results_xml"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/no_results" />
+
+    <ListView
+        android:id="@+id/search_results_xml"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/colorLightGrey"
+        android:dividerHeight="1dp"
+        android:drawSelectorOnTop="false" />
+</LinearLayout>

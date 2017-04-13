@@ -28,6 +28,7 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         try {
@@ -39,10 +40,14 @@ public class TimelineActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         final UserTimeline userTimeline = new UserTimeline.Builder()
                 .screenName(bundle.getString("UserScreenName"))
+                .includeReplies(true)
+                .includeRetweets(true)
                 .build();
+
         adapter = new TweetTimelineListAdapter.Builder(this)
                 .setTimeline(userTimeline)
                 .build();
+
         TextView emptyTimeline = (TextView) findViewById(R.id.notimeline_xml);
         ListView listView = (ListView) findViewById(R.id.timeline_list);
         listView.setEmptyView(emptyTimeline);
@@ -60,7 +65,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.timeline_menu, menu);
+        getMenuInflater().inflate(R.menu.subactivities_menu, menu);
         return true;
     }
 
