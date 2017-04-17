@@ -30,13 +30,6 @@ public class SearchActivity extends AppCompatActivity {
             Log.e("Search-timelineAct", "Null pointer for toolbar displaying as up");
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_search_xml);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-
         final SearchTimeline searchTimeline = new SearchTimeline.Builder()
                 .query("#usa")
                 .languageCode(Locale.ENGLISH.getLanguage())
@@ -56,7 +49,7 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.subactivities_menu, menu);
+        getMenuInflater().inflate(R.menu.search_menu, menu);
         return true;
     }
 

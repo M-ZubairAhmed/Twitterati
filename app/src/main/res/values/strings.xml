@@ -21,6 +21,7 @@
     <string name="menu_report">Report error</string>
     <string name="menu_logout">Log out</string>
     <string name="menu_refresh">Refresh</string>
+    <string name="menu_search">Search</string>
 
     <!--Search activity-->
     <string name="title_activity_search">Search</string>
