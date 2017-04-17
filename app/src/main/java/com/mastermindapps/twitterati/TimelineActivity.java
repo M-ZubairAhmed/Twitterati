@@ -29,6 +29,7 @@ public class TimelineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
+
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         try {
@@ -36,8 +37,8 @@ public class TimelineActivity extends AppCompatActivity {
         } catch (NullPointerException npE) {
             Log.e("Toolbar-timelineAct", "Null pointer for toolbar displaying as up");
         }
-
         Bundle bundle = getIntent().getExtras();
+
         final UserTimeline userTimeline = new UserTimeline.Builder()
                 .screenName(bundle.getString("UserScreenName"))
                 .includeReplies(true)
@@ -52,7 +53,6 @@ public class TimelineActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.timeline_list);
         listView.setEmptyView(emptyTimeline);
         listView.setAdapter(adapter);
-
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

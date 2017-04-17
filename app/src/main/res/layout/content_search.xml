@@ -9,12 +9,20 @@
     tools:context="com.mastermindapps.twitterati.SearchActivity"
     tools:showIn="@layout/activity_search">
 
+    <ProgressBar
+        android:id="@+id/progress_bar_search_xml"
+        style="?android:progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/no_results_xml"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal|center_vertical"
-        android:text="Search tweets, people and more" />
+        android:text="@string/no_results" />
 
     <ListView
         android:id="@+id/search_results_xml"
