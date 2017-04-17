@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.twitter.sdk.android.tweetui.SearchTimeline;
@@ -19,6 +20,7 @@ import java.util.Locale;
 public class SearchActivity extends AppCompatActivity {
 
     ListView searchResultsListV;
+    ProgressBar loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,7 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         TextView noResultsTextV = (TextView) findViewById(R.id.no_results_xml);
-
+        loadingBar = (ProgressBar) findViewById(R.id.progress_bar_search_xml);
         searchResultsListV = (ListView) findViewById(R.id.search_results_xml);
 
         searchResultsListV.setEmptyView(noResultsTextV);
@@ -65,12 +67,10 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id) {
-            case R.id.menu_refresh:
-//                swipeRefreshLayout.setRefreshing(true);
-//                refreshAdapter();
-                break;
-        }
+//        switch (id) {
+//            case :
+//                break;
+//        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -84,6 +84,7 @@ public class SearchActivity extends AppCompatActivity {
         final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
                 .setTimeline(searchTimeline)
                 .build();
+
         searchResultsListV.setAdapter(adapter);
 
     }
