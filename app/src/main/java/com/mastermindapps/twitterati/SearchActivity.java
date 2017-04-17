@@ -1,20 +1,16 @@
 package com.mastermindapps.twitterati;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.twitter.sdk.android.tweetui.SearchTimeline;
-import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
-
-import java.util.Locale;
+import android.widget.Toast;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -29,27 +25,45 @@ public class SearchActivity extends AppCompatActivity {
         } catch (NullPointerException npE) {
             Log.e("Search-timelineAct", "Null pointer for toolbar displaying as up");
         }
+//        handleIntent(getIntent());
 
-        final SearchTimeline searchTimeline = new SearchTimeline.Builder()
-                .query("#usa")
-                .languageCode(Locale.ENGLISH.getLanguage())
-                .maxItemsPerRequest(100)
-                .build();
-
-        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
-                .setTimeline(searchTimeline)
-                .build();
+//        final SearchTimeline searchTimeline = new SearchTimeline.Builder()
+//                .query("#usa")
+//                .languageCode(Locale.ENGLISH.getLanguage())
+//                .maxItemsPerRequest(100)
+//                .build();
+//
+//        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
+//                .setTimeline(searchTimeline)
+//                .build();
 
         TextView noResultsTextV = (TextView) findViewById(R.id.no_results_xml);
         ListView searchResultsListV = (ListView) findViewById(R.id.search_results_xml);
 
         searchResultsListV.setEmptyView(noResultsTextV);
-        searchResultsListV.setAdapter(adapter);
+//        searchResultsListV.setAdapter(adapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
+        MenuInflater menuInflater = getMenuInflater();
+
+        menuInflater.inflate(R.menu.search_menu, menu);
+
+        MenuItem item = menu.findItem(R.id.menu_search_search);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(SearchActivity.this, query, Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return true;
     }
 
