@@ -10,9 +10,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.twitter.sdk.android.tweetui.SearchTimeline;
+import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
+
+import java.util.Locale;
 
 public class SearchActivity extends AppCompatActivity {
+
+    ListView searchResultsListV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,23 +31,12 @@ public class SearchActivity extends AppCompatActivity {
         } catch (NullPointerException npE) {
             Log.e("Search-timelineAct", "Null pointer for toolbar displaying as up");
         }
-//        handleIntent(getIntent());
-
-//        final SearchTimeline searchTimeline = new SearchTimeline.Builder()
-//                .query("#usa")
-//                .languageCode(Locale.ENGLISH.getLanguage())
-//                .maxItemsPerRequest(100)
-//                .build();
-//
-//        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
-//                .setTimeline(searchTimeline)
-//                .build();
 
         TextView noResultsTextV = (TextView) findViewById(R.id.no_results_xml);
-        ListView searchResultsListV = (ListView) findViewById(R.id.search_results_xml);
+
+        searchResultsListV = (ListView) findViewById(R.id.search_results_xml);
 
         searchResultsListV.setEmptyView(noResultsTextV);
-//        searchResultsListV.setAdapter(adapter);
     }
 
     @Override
@@ -55,7 +50,7 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(SearchActivity.this, query, Toast.LENGTH_LONG).show();
+                sendQuery(query);
                 return false;
             }
 
@@ -77,6 +72,20 @@ public class SearchActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void sendQuery(String queryString) {
+        final SearchTimeline searchTimeline = new SearchTimeline.Builder()
+                .query(queryString)
+                .languageCode(Locale.ENGLISH.getLanguage())
+                .maxItemsPerRequest(100)
+                .build();
+
+        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
+                .setTimeline(searchTimeline)
+                .build();
+        searchResultsListV.setAdapter(adapter);
+
     }
 
 }

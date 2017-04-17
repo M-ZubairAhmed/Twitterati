@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal|center_vertical"
-        android:text="@string/no_results" />
+        android:text="Search tweets, people and more" />
 
     <ListView
         android:id="@+id/search_results_xml"
