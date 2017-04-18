@@ -1,44 +1,57 @@
 package com.mastermindapps.twitterati;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.core.services.StatusesService;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
+import com.twitter.sdk.android.tweetui.FixedTweetTimeline;
+import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
+
+import java.util.List;
+
+import io.fabric.sdk.android.Fabric;
+import retrofit2.Call;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView navigationView;
-    String queryString = null;
-    ProgressBar fetchingResultsLoader;
     String userHandleTwitter;
     String userNameTwitter;
     String userPicURLTwitter;
     String userCoverURLTwitter;
+    ListView homeListView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        homeListView = (ListView) findViewById(R.id.home_list_xml);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,6 +64,36 @@ public class HomeActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        TwitterSession twitterSession = Twitter.getInstance().core.getSessionManager().getActiveSession();
+        long userTwitterSessionID = twitterSession.getUserId();
+
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TwitterSecret.TWITTER_KEY, TwitterSecret.TWITTER_SECRET);
+        Fabric.with(this, new TwitterCore(authConfig), new TweetComposer());
+
+        if (userTwitterSessionID != 0) {
+            StatusesService statusesService = Twitter.getApiClient().getStatusesService();
+            Call<List<Tweet>> tweelListCall = statusesService.homeTimeline(100, null, null, false, false, false, false);
+            tweelListCall.enqueue(new Callback<List<Tweet>>() {
+                @Override
+                public void success(Result<List<Tweet>> result) {
+                    List<Tweet> tweets = result.data;
+                    if (tweets != null) {
+                        FixedTweetTimeline fixedTweetTimeline = new FixedTweetTimeline.Builder().setTweets(tweets).build();
+
+                        TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(HomeActivity.this).setTimeline(fixedTweetTimeline).build();
+                        homeListView.setAdapter(adapter);
+                    }
+
+                }
+
+                @Override
+                public void failure(TwitterException exception) {
+
+                }
+            });
+        }
+
 
         TextView userNameTextV = (TextView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_name_xml);
         TextView userHandleTextV = (TextView) navigationView.getHeaderView(0).findViewById(R.id.twitter_user_handle_xml);
@@ -135,26 +178,6 @@ public class HomeActivity extends AppCompatActivity
         Toast.makeText(getApplicationContext(), "You are logged out", Toast.LENGTH_LONG).show();
     }
 
-    String getSearchQuery() {
-        LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
-        View alertdialogCustomView = inflater.inflate(R.layout.search_alertdia_layout, null);
-        final EditText queryEditT = (EditText) alertdialogCustomView.findViewById(R.id.search_query_editt_xml);
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setView(alertdialogCustomView)
-                .setTitle("Enter your search query")
-                .setPositiveButton("Search", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        queryString = queryEditT.getText().toString().trim().toLowerCase();
-                        Toast.makeText(HomeActivity.this, userNameTwitter, Toast.LENGTH_LONG).show();
-                    }
-                })
-                .create();
-        alertDialog.show();
-        fetchingResultsLoader = new ProgressBar(HomeActivity.this);
-        fetchingResultsLoader.setIndeterminate(true);
-        return queryString;
-    }
 
 }
 
