@@ -19,29 +19,30 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".TimelineActivity"
             android:label="@string/title_activity_timeline"
-            android:parentActivityName=".HomeActivity">
-
-        </activity>
+            android:parentActivityName=".HomeActivity"></activity>
         <activity
             android:name=".SearchActivity"
             android:label="@string/title_activity_search"
-            android:parentActivityName=".HomeActivity"
             android:launchMode="singleTop"
+            android:parentActivityName=".HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:resource="@xml/searchable"
                 android:value="com.mastermindapps.twitterati.HomeActivity" />
         </activity>
+        <activity
+            android:name=".TweetActivity"
+            android:label="@string/title_activity_tweet"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
