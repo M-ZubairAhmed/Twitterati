@@ -19,11 +19,15 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".TimelineActivity"
             android:label="@string/title_activity_timeline"
-            android:parentActivityName=".HomeActivity"></activity>
+            android:parentActivityName=".HomeActivity">
+
+        </activity>
         <activity
             android:name=".SearchActivity"
             android:label="@string/title_activity_search"
@@ -41,8 +45,10 @@
         </activity>
         <activity
             android:name=".TweetActivity"
-            android:label="@string/title_activity_tweet"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar">
+            
+        </activity>
     </application>
 
 </manifest>
