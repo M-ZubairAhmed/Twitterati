@@ -47,7 +47,7 @@
             android:name=".TweetActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar">
-            
+
         </activity>
     </application>
 

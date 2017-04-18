@@ -16,13 +16,12 @@ import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.tweetui.TimelineResult;
-import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 import com.twitter.sdk.android.tweetui.UserTimeline;
 
 public class TimelineActivity extends AppCompatActivity {
 
     final String TAG = "Timeline Activity";
-    TweetTimelineListAdapter adapter;
+    TwitterAdapter adapter;
     SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -46,14 +45,14 @@ public class TimelineActivity extends AppCompatActivity {
                 .includeRetweets(true)
                 .build();
 
-        adapter = new TweetTimelineListAdapter.Builder(this)
-                .setTimeline(userTimeline)
-                .build();
+        adapter = new TwitterAdapter(TimelineActivity.this, userTimeline);
 
         TextView emptyTimeline = (TextView) findViewById(R.id.notimeline_xml);
         ListView listView = (ListView) findViewById(R.id.timeline_list);
+
         listView.setEmptyView(emptyTimeline);
         listView.setAdapter(adapter);
+
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

@@ -13,7 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.twitter.sdk.android.tweetui.SearchTimeline;
-import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
 import java.util.Locale;
 
@@ -80,10 +79,11 @@ public class SearchActivity extends AppCompatActivity {
                 .languageCode(Locale.ENGLISH.getLanguage())
                 .maxItemsPerRequest(100)
                 .build();
-
-        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
-                .setTimeline(searchTimeline)
-                .build();
+//
+//        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
+//                .setTimeline(searchTimeline)
+//                .build();
+        TwitterAdapter adapter = new TwitterAdapter(SearchActivity.this, searchTimeline);
 
         searchResultsListV.setAdapter(adapter);
 
