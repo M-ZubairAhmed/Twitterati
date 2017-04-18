@@ -21,6 +21,7 @@ import com.twitter.sdk.android.tweetui.UserTimeline;
 
 public class TimelineActivity extends AppCompatActivity {
 
+    final String TAG = "Timeline Activity";
     TweetTimelineListAdapter adapter;
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -35,7 +36,7 @@ public class TimelineActivity extends AppCompatActivity {
         try {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } catch (NullPointerException npE) {
-            Log.e("Toolbar-timelineAct", "Null pointer for toolbar displaying as up");
+            Log.e(TAG, "Null pointer for toolbar displaying as up");
         }
         Bundle bundle = getIntent().getExtras();
 

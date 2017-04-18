@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -19,7 +21,7 @@ import retrofit2.Call;
 
 public class TweetActivity extends AppCompatActivity {
 
-    private final String ACTIVITY_NAME = "TweetActivity";
+    private final String TAG = "TweetActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class TweetActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         final long tweetID = bundle.getLong("tweetID");
-        Log.d(ACTIVITY_NAME, "tweet ID recieved: " + tweetID);
+        Log.d(TAG, "tweet ID recieved: " + tweetID);
 
         final CardView rootLayout = (CardView) findViewById(R.id.tweet_show_xml);
 
@@ -47,9 +49,27 @@ public class TweetActivity extends AppCompatActivity {
 
             @Override
             public void failure(TwitterException twtE) {
-                Log.d(ACTIVITY_NAME, "Rendering of tweet: " + tweetID + " failed. Stack trace\n" + twtE);
+                Log.d(TAG, "Rendering of tweet: " + tweetID + " failed. Stack trace\n" + twtE);
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.tweet_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_tweet_close:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }

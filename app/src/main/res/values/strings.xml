@@ -32,4 +32,7 @@
     <string name="title_activity_timeline">Timeline</string>
     <string name="no_tweet">Your tweets!</string>
     <string name="title_activity_tweet">TweetActivity</string>
+
+    <!--Tweet viewer-->
+    <string name="close_activity">Close</string>
 </resources>
