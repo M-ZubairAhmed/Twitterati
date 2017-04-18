@@ -28,7 +28,6 @@ import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.core.services.StatusesService;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 import com.twitter.sdk.android.tweetui.FixedTweetTimeline;
-import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
 import java.util.List;
 
@@ -81,7 +80,7 @@ public class HomeActivity extends AppCompatActivity
                     if (tweets != null) {
                         FixedTweetTimeline fixedTweetTimeline = new FixedTweetTimeline.Builder().setTweets(tweets).build();
 
-                        TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(HomeActivity.this).setTimeline(fixedTweetTimeline).build();
+                        TwitterAdapter adapter = new TwitterAdapter(HomeActivity.this, fixedTweetTimeline);
                         homeListView.setAdapter(adapter);
                     }
 

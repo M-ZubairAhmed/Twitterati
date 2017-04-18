@@ -2,9 +2,9 @@ package com.mastermindapps.twitterati;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.RelativeLayout;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -32,7 +32,7 @@ public class TweetActivity extends AppCompatActivity {
         final long tweetID = bundle.getLong("tweetID");
         Log.d(ACTIVITY_NAME, "tweet ID recieved: " + tweetID);
 
-        final RelativeLayout rootLayout = (RelativeLayout) findViewById(R.id.tweet_show_xml);
+        final CardView rootLayout = (CardView) findViewById(R.id.tweet_show_xml);
 
         TwitterApiClient twitterApiClient = TwitterCore.getInstance().getApiClient();
         StatusesService statusesService = twitterApiClient.getStatusesService();
@@ -42,11 +42,12 @@ public class TweetActivity extends AppCompatActivity {
             public void success(Result<Tweet> result) {
                 TweetView tweetView = new TweetView(TweetActivity.this, result.data, R.style.tw__TweetLightStyle);
                 rootLayout.addView(tweetView);
+                tweetView.setEnabled(false);
             }
 
             @Override
             public void failure(TwitterException twtE) {
-                Log.d(ACTIVITY_NAME, "Rendering of individual tweet: " + tweetID + " failed. Stack trace\n" + twtE);
+                Log.d(ACTIVITY_NAME, "Rendering of tweet: " + tweetID + " failed. Stack trace\n" + twtE);
             }
         });
     }
